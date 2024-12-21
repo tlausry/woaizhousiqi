@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>满屏爱心飞舞</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            transform: rotate(45deg);
+            opacity: 0.8;
+            animation: heartAnimation 5s linear infinite;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 50px;
+            top: 0;
+        }
+
+        @keyframes heartAnimation {
+            0% {
+                transform: rotate(45deg) scale(1);
+                top: 100%;
+                left: random(0, 100vw);
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(45deg) scale(0.5);
+                top: -100%;
+                left: random(0, 100vw);
+                opacity: 0;
+            }
+        }
+
+        .text {
+            position: absolute;
+            top: 50%;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #000;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="text">唐梓钦和周思齐永远在一起</div>
+    <script>
+        // 动态生成多个爱心并随机飞舞
+        const createHeart = () => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            // 设置随机的左边位置
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 3 + 2}s`; // 随机动画持续时间
+            document.body.appendChild(heart);
+            // 删除爱心元素，避免页面性能问题
+            setTimeout(() => {
+                heart.remove();
+            }, 5000); // 与动画时间一致
+        };
+
+        // 每隔100毫秒生成一个新的爱心
+        setInterval(createHeart, 100);
+    </script>
+</body>
+</html>
